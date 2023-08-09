@@ -27,24 +27,24 @@ function ListAuthorBook() {
           .catch(error => console.error('Error deleting book:', error));
       };
     return (
-        <div>
-          <h2>Author Details</h2>
-
-          <div>
+      <div class="container">
+            
             <h2>Book List</h2>
-            <ul>
+            
+            <div>
                 {books.map(book => (
-                <li key={book.bookId}>
-                    <h3>{book.title}</h3>
-                    <p>Description: {book.description}</p>
-                    <p>Author: {book.author.name}</p>
-                    <p>Category : {book.category.categoryName}</p>
-                    <p>Release Date: {book.releaseDate}</p>
+                <div class="card" style={{width: "18rem"}}>
+                   <div class="card-body">
+                    <h5 class="card-title">{book.title}</h5>
+                    <p class="card-text">Description: {book.description}</p>
+                    <p class="card-text">Author: {book.author.name}</p>
+                    <p class="card-text">Category : {book.category.categoryName}</p>
+                    <p class="card-text">Release Date: {book.releaseDate}</p>
                     <button class="btn btn-danger"  onClick={() => handleDelete(book.bookId)}>Delete</button>
                     <button class="btn btn-info"><Link to={`/editBook/${book.bookId}`}>Edit</Link></button>
-                </li>
+                    </div>
+                </div>
                 ))}
-            </ul>
             </div>
         </div>
       );
