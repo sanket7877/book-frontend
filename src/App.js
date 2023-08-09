@@ -1,12 +1,12 @@
 import logo from './logo.svg';
 import './App.css';
-import { Outlet, Link } from "react-router-dom";
+import { Outlet, Link,useNavigate } from "react-router-dom";
 import AuthorForm from './components/AuthorForm';
 import React, { useEffect, useState } from 'react';
 
 function App() {
   const [data, setData] = useState([]);
-
+  const navigate = useNavigate();
   useEffect(() => {
     fetch('http://localhost:8080/author/bookCounts') // Change the URL to your backend endpoint
       .then(response => response.json())
@@ -14,12 +14,25 @@ function App() {
       .catch(error => console.error('Error fetching data:', error));
   }, []);
 
+  const handleSubmit = async (e) =>{
+    console.log(e);
+    navigate('/listAuthorBook/'+e);
+  }
   return (
     <div>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+          <li class="nav-item">
+          <Link class="nav-link" to={`addAuthor`}>Add Author</Link> 
+          </li>
+          <li class="nav-item">
+            <Link class="nav-link"  to={`addBook`}>Add Book</Link> 
+          </li>
+        </ul>
+      </div>
+    </nav>
 
-      <Link to={`addAuthor`}>Add Author</Link> 
-      <br></br>
-      <Link to={`addBook`}>Add Book</Link> 
       <div>
       <table class="table">
         <thead>
@@ -36,7 +49,7 @@ function App() {
               <td>{author[0]}</td>
               <td>{author[1]}</td>
               <td>{author[2]}</td>
-              <td><button class="btn btn-primary"><Link to={`/listAuthorBook/${author[3]}`}>Show Books</Link></button></td>
+              <td><button class="btn btn-primary" onClick={()=>handleSubmit(author[3])}>Show Books</button></td>
             </tr>
           ))}
         </tbody>
