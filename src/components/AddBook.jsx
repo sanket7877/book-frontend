@@ -1,5 +1,6 @@
 import React, { useState,useEffect } from 'react';
 import { useParams } from 'react-router-dom';
+import { Outlet, Link,useNavigate } from "react-router-dom";
 function AddBook() {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
@@ -10,6 +11,8 @@ function AddBook() {
   const [selectedDate, setSelectedDate] = useState('');
  const [bookdData,setBookData] = useState([])
   const { bookId } = useParams();
+  const navigate = useNavigate();
+ 
 const handleSubmit = async (e) => {
 
     e.preventDefault();
@@ -32,6 +35,7 @@ const handleSubmit = async (e) => {
   
         if (response.ok) {
             alert("Book Added");
+            navigate('/');
           // Reset the form after successful submission
           
          } else {
@@ -66,6 +70,7 @@ const handleSubmit = async (e) => {
                 setDescription('');
                 setAuthorId('');
                 setCategoryId('');
+                navigate('/');
               // Reset the form after successful submission
              } else {
               console.error('Failed to add Book');
@@ -108,13 +113,12 @@ const handleSubmit = async (e) => {
     setSelectedDate(e.target.value);
   };
   return (
-    <div>
+    <div class="container">
       <h2>Add Book  </h2><div class="container text-center">
 
       <form onSubmit={handleSubmit}>
       <div class="col-8">
-
-          <label for="exampleFormControlInput1" class="form-label">Title </label>
+        <label for="exampleFormControlInput1" class="form-label">Title </label>
           <input
             type="text"
             id="title"
